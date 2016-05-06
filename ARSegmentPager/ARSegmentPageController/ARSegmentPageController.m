@@ -18,7 +18,6 @@ const void *_ARSEGMENTPAGE_CURRNTPAGE_SCROLLVIEWINSET =
 
 @property(nonatomic, strong)
     UIView<ARSegmentPageControllerHeaderProtocol> *headerView;
-@property(nonatomic, strong) ARSegmentView *segmentView;
 @property(nonatomic, strong) NSMutableArray *controllers;
 @property(nonatomic, assign) CGFloat segmentTopInset;
 @property(nonatomic, weak)
@@ -95,7 +94,7 @@ const void *_ARSEGMENTPAGE_CURRNTPAGE_SCROLLVIEWINSET =
 - (void)_setUp {
   self.ignoreOffsetChanged = NO;
   self.headerHeight = 400;
-  self.segmentHeight = 44;
+  self.segmentHeight = 0;
   self.segmentTopInset = 400;
   self.segmentMiniTopInset = 0;
   self.controllers = [NSMutableArray array];
@@ -112,28 +111,6 @@ const void *_ARSEGMENTPAGE_CURRNTPAGE_SCROLLVIEWINSET =
   self.headerView = [self customHeaderView];
   self.headerView.clipsToBounds = YES;
   [self.view addSubview:self.headerView];
-
-  self.segmentView = [[ARSegmentView alloc] init];
-  [self.segmentView.segmentControl
-             addTarget:self
-                action:@selector(segmentControlDidChangedValue:)
-      forControlEvents:UIControlEventValueChanged];
-  [self.view addSubview:self.segmentView];
-
-  // all segment title and controllers
-  [self.controllers
-      enumerateObjectsUsingBlock:^(
-          UIViewController<ARSegmentControllerDelegate> *controller,
-          NSUInteger idx, BOOL *stop) {
-        NSString *title = [controller segmentTitle];
-
-        [self.segmentView.segmentControl insertSegmentWithTitle:title
-                                                        atIndex:idx
-                                                       animated:NO];
-      }];
-
-  // defaut at index 0
-  self.segmentView.segmentControl.selectedSegmentIndex = 0;
   UIViewController<ARSegmentControllerDelegate> *controller =
       self.controllers[0];
   [controller willMoveToParentViewController:self];
@@ -185,43 +162,6 @@ const void *_ARSEGMENTPAGE_CURRNTPAGE_SCROLLVIEWINSET =
                                         attribute:NSLayoutAttributeRight
                                        multiplier:1
                                          constant:0]];
-
-  // segment
-  self.segmentView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view
-      addConstraint:[NSLayoutConstraint constraintWithItem:self.segmentView
-                                                 attribute:NSLayoutAttributeLeft
-                                                 relatedBy:NSLayoutRelationEqual
-                                                    toItem:self.view
-                                                 attribute:NSLayoutAttributeLeft
-                                                multiplier:1
-                                                  constant:0]];
-  [self.view addConstraint:[NSLayoutConstraint
-                               constraintWithItem:self.segmentView
-                                        attribute:NSLayoutAttributeRight
-                                        relatedBy:NSLayoutRelationEqual
-                                           toItem:self.view
-                                        attribute:NSLayoutAttributeRight
-                                       multiplier:1
-                                         constant:0]];
-
-  [self.view addConstraint:[NSLayoutConstraint
-                               constraintWithItem:self.segmentView
-                                        attribute:NSLayoutAttributeTop
-                                        relatedBy:NSLayoutRelationEqual
-                                           toItem:self.headerView
-                                        attribute:NSLayoutAttributeBottom
-                                       multiplier:1
-                                         constant:0]];
-
-  [self.segmentView addConstraint:[NSLayoutConstraint
-                                      constraintWithItem:self.segmentView
-                                               attribute:NSLayoutAttributeHeight
-                                               relatedBy:NSLayoutRelationEqual
-                                                  toItem:nil
-                                               attribute:0
-                                              multiplier:1
-                                                constant:self.segmentHeight]];
 }
 
 - (void)_layoutControllerWithController:
@@ -286,14 +226,6 @@ const void *_ARSEGMENTPAGE_CURRNTPAGE_SCROLLVIEWINSET =
                                          multiplier:1
                                            constant:0]];
   } else {
-    [self.view addConstraint:[NSLayoutConstraint
-                                 constraintWithItem:pageView
-                                          attribute:NSLayoutAttributeTop
-                                          relatedBy:NSLayoutRelationEqual
-                                             toItem:self.segmentView
-                                          attribute:NSLayoutAttributeBottom
-                                         multiplier:1
-                                           constant:0]];
     [self.view addConstraint:[NSLayoutConstraint
                                  constraintWithItem:pageView
                                           attribute:NSLayoutAttributeHeight
