@@ -107,7 +107,7 @@ const void *_ARSEGMENTPAGE_CURRNTPAGE_SCROLLVIEWINSET =
           respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
     self.view.preservesSuperviewLayoutMargins = YES;
   }
-  self.extendedLayoutIncludesOpaqueBars = NO;
+  self.extendedLayoutIncludesOpaqueBars = YES;
   self.headerView = [self customHeaderView];
   self.headerView.clipsToBounds = YES;
   [self.view addSubview:self.headerView];
