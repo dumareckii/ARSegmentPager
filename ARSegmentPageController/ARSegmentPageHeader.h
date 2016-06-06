@@ -6,9 +6,11 @@
 //  Copyright (c) 2015年 August. All rights reserved.
 //
 
-#import "ARSegmentPageControllerHeaderProtocol.h"
 #import <UIKit/UIKit.h>
+#import "ARSegmentPageControllerHeaderProtocol.h"
 
-@interface ARSegmentPageHeader : UIView <ARSegmentPageControllerHeaderProtocol>
+@interface ARSegmentPageHeader : UIView<ARSegmentPageControllerHeaderProtocol>
+
+@property (nonatomic, strong) UIImageView *imageView;
 
 @end

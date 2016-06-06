@@ -6,13 +6,13 @@
 //  Copyright (c) 2015年 August. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 @protocol ARSegmentControllerDelegate <NSObject>
 
-- (NSString *)segmentTitle;
+-(NSString *)segmentTitle;
 
 @optional
-- (UIScrollView *)streachScrollView;
+-(UIScrollView *)streachScrollView;
 
 @end
