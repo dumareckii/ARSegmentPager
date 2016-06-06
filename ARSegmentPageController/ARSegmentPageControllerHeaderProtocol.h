@@ -6,10 +6,10 @@
 //
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @protocol ARSegmentPageControllerHeaderProtocol <NSObject>
 
-@property (nonatomic) UIImageView *imageView;
+- (UIImageView *)backgroundImageView;
 
 @end
